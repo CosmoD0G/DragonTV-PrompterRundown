@@ -9,6 +9,19 @@ class RundownControllerItem extends JPanel {
         titleField = new JTextField(20);
         notesField = new JTextField(20);
         durationSpinner = new JSpinner();
+        this.add(titleField);
+        this.add(notesField);
+        this.add(durationSpinner);
+    }
+
+    public RundownControllerItem(String title, String notes, int duration) {
+        titleField = new JTextField(title, 20);
+        notesField = new JTextField(notes, 20);
+        durationSpinner = new JSpinner();
+        durationSpinner.setValue(duration);
+        this.add(titleField);
+        this.add(notesField);
+        this.add(durationSpinner);
     }
 
     public String getTitle() {

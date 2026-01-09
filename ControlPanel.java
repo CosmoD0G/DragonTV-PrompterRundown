@@ -8,13 +8,15 @@ public class ControlPanel extends JFrame {
     private controller ctrl;
     
 
-    private void clear() {
+    private boolean clear() {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to clear the rundown?\nThis action cannot be undone.", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println("User confirmed clearing the rundown");
                 ctrl.clearRundown(result == JOptionPane.YES_OPTION);
+                return true;
             } else {
                 System.out.println("User canceled clearing the rundown");
+                return false;
             }
     }
 
@@ -129,6 +131,10 @@ public class ControlPanel extends JFrame {
             ctrl.setFile(csvFile);
             if (csvFile != null) {
                 System.out.println("Selected CSV: " + csvFile.getAbsolutePath());
+                if (clear()) {
+                    
+                }
+                
             }
         });
 
