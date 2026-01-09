@@ -1,11 +1,11 @@
 import javax.swing.*;
 
-class RundownControllerItem extends JPanel {
+class DashboardItem extends JPanel {
     private JTextField titleField;
     private JTextField notesField;
     private JSpinner durationSpinner;
 
-    public RundownControllerItem() {
+    public DashboardItem() {
         titleField = new JTextField(20);
         notesField = new JTextField(20);
         durationSpinner = new JSpinner();
@@ -14,7 +14,7 @@ class RundownControllerItem extends JPanel {
         this.add(durationSpinner);
     }
 
-    public RundownControllerItem(String title, String notes, int duration) {
+    public DashboardItem(String title, String notes, int duration) {
         titleField = new JTextField(title, 20);
         notesField = new JTextField(notes, 20);
         durationSpinner = new JSpinner();

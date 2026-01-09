@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class RundownHUDItem extends JPanel{
+public class HUDItem extends JPanel{
     private String title = "";
     private String notes = "";
     private int duration = 0;
@@ -8,7 +8,7 @@ public class RundownHUDItem extends JPanel{
     private JLabel titleLabel;
     private JLabel durationLabel;
     
-    public RundownHUDItem(String title, String notes, int duration) {
+    public HUDItem(String title, String notes, int duration) {
         this.title = title;
         this.notes = notes;
         this.duration = duration;

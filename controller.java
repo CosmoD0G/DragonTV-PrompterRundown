@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.util.*;
 
 public class controller {
-    private ArrayList<RundownHUDItem> rundown_panels;
-    private ArrayList<RundownControllerItem> controller_items;
+    private ArrayList<HUDItem> rundown_panels;
+    private ArrayList<DashboardItem> controller_items;
     private int current_index = -1;
     private boolean is_live = false;
     private boolean is_playing = false;
@@ -13,11 +13,11 @@ public class controller {
 
     public void syncItemsToHUD() {
         rundown_panels.clear();
-        for (RundownControllerItem item : controller_items) {
+        for (DashboardItem item : controller_items) {
             String title = item.getTitle();
             String notes = item.getNotes();
             int duration = item.getDuration();
-            RundownHUDItem hudItem = new RundownHUDItem(title, notes, duration);
+            HUDItem hudItem = new HUDItem(title, notes, duration);
             rundown_panels.add(hudItem);
         }
     }
@@ -92,13 +92,18 @@ public class controller {
                     } else {
                         duration = 0;
                     }
-                    controller_items.add(new RundownControllerItem(title, notes, duration));
+                    controller_items.add(new DashboardItem(title, notes, duration));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+    public ArrayList<DashboardItem> getControllerItems() {
+        return controller_items;
+    }
+
     public controller() {
         rundown_panels = new ArrayList<>();
         controller_items = new ArrayList<>();

@@ -3,16 +3,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class ControlPanel extends JFrame {
+public class Dashboard extends JFrame {
 
     private controller ctrl;
-    
+    private JPanel container = new JPanel();
 
     private boolean clear() {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to clear the rundown?\nThis action cannot be undone.", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println("User confirmed clearing the rundown");
                 ctrl.clearRundown(result == JOptionPane.YES_OPTION);
+                for (DashboardItem item : ctrl.getControllerItems()) {
+                    item.removeAll();
+                    for (Component comp : item.getComponents()) {
+                        comp = null;
+                    }
+                }
+                container.revalidate(); // refresh layout
+                container.repaint();
                 return true;
             } else {
                 System.out.println("User canceled clearing the rundown");
@@ -20,7 +28,7 @@ public class ControlPanel extends JFrame {
             }
     }
 
-    public ControlPanel(controller ctrl) {
+    public Dashboard(controller ctrl) {
         this.ctrl = ctrl;
         setTitle("Control Panel");
         setSize(500, 400);
@@ -35,7 +43,7 @@ public class ControlPanel extends JFrame {
         topPanel.setPreferredSize(new Dimension(500, 60));
 
         // scrollable container for rundown items
-        JPanel container = new JPanel();
+        
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(container);
 
@@ -49,9 +57,11 @@ public class ControlPanel extends JFrame {
 
         addButton.addActionListener(e -> {
             System.out.println("Add Item button clicked");
-            container.add(new RundownControllerItem());
+            container.add(new DashboardItem());
             container.revalidate(); // refresh layout
             container.repaint();
+            container.setAlignmentY(Component.TOP_ALIGNMENT);
+
         });
 
         // Add "Sync to HUD" button
@@ -132,7 +142,7 @@ public class ControlPanel extends JFrame {
             if (csvFile != null) {
                 System.out.println("Selected CSV: " + csvFile.getAbsolutePath());
                 if (clear()) {
-                    
+
                 }
                 
             }
