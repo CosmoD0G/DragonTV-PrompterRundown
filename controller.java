@@ -11,6 +11,10 @@ public class controller {
     private boolean is_playing = false;
     private File csvFile;
 
+    public void addItem(DashboardItem item) {
+        controller_items.add(item);
+    }
+
     public void syncItemsToHUD() {
         rundown_panels.clear();
         for (DashboardItem item : controller_items) {
@@ -71,6 +75,7 @@ public class controller {
                 int line_num = 0;
                 while ((line = br.readLine()) != null) {
                     line_num++;
+                    System.out.println("Reading line " + line_num + ": " + line);
                     if (line_num == 1) {
                         continue; // skip header
                     }
@@ -98,6 +103,7 @@ public class controller {
                 e.printStackTrace();
             }
         }
+        System.out.println("Loaded " + controller_items.size() + " items from CSV");
     }
 
     public ArrayList<DashboardItem> getControllerItems() {
