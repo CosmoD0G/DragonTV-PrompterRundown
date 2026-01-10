@@ -5,6 +5,7 @@ class Base {
 
         Dashboard cp = new Dashboard(ctrl);
         cp.setVisible(true);
+        ctrl.setDashboard(cp);
 
         HUD hud = new HUD();
         hud.setVisible(true);

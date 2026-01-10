@@ -8,6 +8,19 @@ public class Dashboard extends JFrame {
     private controller ctrl;
     private JPanel container;
 
+    public void reassignNumbers() {
+        Component[] components = container.getComponents();
+        int j = 0;
+        for (int i = 0; i < components.length; i++) {
+            if (components[i] instanceof DashboardItem) {
+                DashboardItem item = (DashboardItem) components[i];
+                item.updateItemNumber(i + 1);
+                j++;
+            }
+        }
+        DashboardItem.setInstanceCounter(j);
+    }
+
     // Clear the rundown with confirmation dialog
     private boolean clear() {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to clear the rundown?\nThis action cannot be undone.", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -17,9 +30,9 @@ public class Dashboard extends JFrame {
 
                 // update UI
                 container.removeAll();
+                reassignNumbers();
                 container.revalidate();
                 container.repaint();
-
                 return true;
             } else {
                 System.out.println("User canceled clearing the rundown");
@@ -38,6 +51,7 @@ public class Dashboard extends JFrame {
         container.add(item);
         container.revalidate();
         container.repaint();
+        
     }
 
     public Dashboard(controller ctrl) {
@@ -74,7 +88,7 @@ public class Dashboard extends JFrame {
         addButton.addActionListener(e -> {
             System.out.println("Add Item button clicked");
 
-            DashboardItem newItem = new DashboardItem();
+            DashboardItem newItem = new DashboardItem(this);
             ctrl.addItem(newItem);
 
             addToDashboard(newItem);

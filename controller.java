@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.util.*;
 
 public class controller {
+    private Dashboard dashboard;
     private ArrayList<HUDItem> rundown_panels;
     private ArrayList<DashboardItem> controller_items;
     private int current_index = -1;
@@ -11,6 +12,9 @@ public class controller {
     private boolean is_playing = false;
     private File csvFile;
 
+    public void setDashboard(Dashboard dashboard) {
+        this.dashboard = dashboard;
+    }
     public void addItem(DashboardItem item) {
         controller_items.add(item);
     }
@@ -97,7 +101,7 @@ public class controller {
                     } else {
                         duration = 0;
                     }
-                    controller_items.add(new DashboardItem(title, notes, duration));
+                    controller_items.add(new DashboardItem(title, notes, duration, dashboard));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
