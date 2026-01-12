@@ -76,9 +76,7 @@ public class Dashboard extends JFrame {
         JScrollPane scrollPane = new JScrollPane(container);
         this.add(topPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
-
-        // setup live indicator. do not add yet because we want it at the end
-        JLabel liveIndicator = new JLabel("● LIVE");
+        
 
         
         // Add "Add Item" button
@@ -187,15 +185,14 @@ public class Dashboard extends JFrame {
         topPanel.add(exportCSVButton);
 
         // Add Live Indicator
+        JLabel liveIndicator = new JLabel("● LIVE");
+        liveIndicator.setForeground(Color.RED);
         topPanel.add(liveIndicator);
 
-       
+        JLabel main_timer = new JLabel("00:00:00");
+        main_timer.setFont(new Font("Monospaced", Font.BOLD, 16));
+        topPanel.add(main_timer);
 
-        // ===== Add panels to frame =====
-        
-
-        // ===== Button actions =====
-        
 
         
 

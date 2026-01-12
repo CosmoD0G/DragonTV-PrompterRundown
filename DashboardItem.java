@@ -24,6 +24,13 @@ class DashboardItem extends JPanel {
         instanceCounter = count;
     }
 
+    public void advanceSecond() {
+        int currentDuration = (Integer) durationSpinner.getValue();
+        if (currentDuration > 0) {
+            durationSpinner.setValue(currentDuration - 1);
+        }
+    }
+
     private void declareComponents() {
         // set item number appropriately
         instanceCounter++;

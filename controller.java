@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.*;
+import javax.swing.Timer;
 
 public class controller {
     private Dashboard dashboard;
@@ -11,10 +12,24 @@ public class controller {
     private boolean is_live = false;
     private boolean is_playing = false;
     private File csvFile;
+    private int seconds_remaining = 0;
+    private boolean separate_timer_mode = false;
+    private boolean countdown_auto = false;
 
     public void setDashboard(Dashboard dashboard) {
         this.dashboard = dashboard;
     }
+
+    public void take(int target) {
+        current_index = target;
+    }
+
+    public void advanceSecond() {
+        if (is_playing) {
+            controller_items.get(current_index).advanceSecond();
+        }
+    }
+
     public void addItem(DashboardItem item) {
         controller_items.add(item);
     }
@@ -66,10 +81,6 @@ public class controller {
             controller_items.clear();
             current_index = -1;
         }
-    }
-
-    public void updateActiveElement() {
-        
     }
 
     // =========== CSV Loading ===========
@@ -125,7 +136,7 @@ public class controller {
         rundown_panels = new ArrayList<>();
         controller_items = new ArrayList<>();
 
-        Timer timer = new Timer(1000, e -> myFunction());
+        Timer timer = new Timer(1000, e -> advanceSecond());
         timer.start();
     }   
 }
