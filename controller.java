@@ -68,6 +68,11 @@ public class controller {
         }
     }
 
+    public void updateActiveElement() {
+        
+    }
+
+    // =========== CSV Loading ===========
     public void setFile(File file) {
         csvFile = file;
     }
@@ -110,6 +115,8 @@ public class controller {
         System.out.println("Loaded " + controller_items.size() + " items from CSV");
     }
 
+    // ======= CSV Saving =======
+
     public ArrayList<DashboardItem> getControllerItems() {
         return controller_items;
     }
@@ -117,5 +124,8 @@ public class controller {
     public controller() {
         rundown_panels = new ArrayList<>();
         controller_items = new ArrayList<>();
+
+        Timer timer = new Timer(1000, e -> myFunction());
+        timer.start();
     }   
 }

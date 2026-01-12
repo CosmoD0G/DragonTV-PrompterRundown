@@ -53,7 +53,7 @@ class DashboardItem extends JPanel {
         notesArea = new JTextArea(5,30);
 
         // duration spinner
-        durationSpinner = new JSpinner();
+        durationSpinner = new JSpinner(new SpinnerNumberModel(60, 1, 3600, 1));
 
         // remove button
         JButton removeButton = new JButton("X");
