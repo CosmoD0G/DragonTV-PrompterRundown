@@ -21,6 +21,7 @@ public class Dashboard extends JFrame {
         DashboardItem.setInstanceCounter(j);
     }
 
+
     // Clear the rundown with confirmation dialog
     private boolean clear() {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to clear the rundown?\nThis action cannot be undone.", "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -76,7 +77,9 @@ public class Dashboard extends JFrame {
         JScrollPane scrollPane = new JScrollPane(container);
         this.add(topPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
-        
+
+        // setup live indicator. do not add yet because we want it at the end
+        JLabel liveIndicator = new JLabel("● LIVE");
 
         
         // Add "Add Item" button
@@ -126,7 +129,7 @@ public class Dashboard extends JFrame {
 
         goToTopButton.addActionListener(e -> {
             System.out.println("Go to Top button clicked");
-            // Implement go to top functionality if needed
+            ctrl.take(0);
         });
 
         // Add "Live Toggle" button
@@ -185,20 +188,25 @@ public class Dashboard extends JFrame {
         topPanel.add(exportCSVButton);
 
         // Add Live Indicator
-        JLabel liveIndicator = new JLabel("● LIVE");
-        liveIndicator.setForeground(Color.RED);
         topPanel.add(liveIndicator);
 
-        JLabel main_timer = new JLabel("00:00:00");
-        main_timer.setFont(new Font("Monospaced", Font.BOLD, 16));
-        topPanel.add(main_timer);
+       
 
+        // ===== Add panels to frame =====
+        
+
+        // ===== Button actions =====
+        
 
         
 
         // Show the frame
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    public controller getController() {
+        return ctrl;
     }
 }
 

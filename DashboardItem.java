@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ class DashboardItem extends JPanel {
     private JTextField titleField;
     private JTextArea notesArea;
     private JSpinner durationSpinner;
+    private boolean active = false;
 
     public void updateItemNumber(int newNumber) {
         this.itemNumber = newNumber;
@@ -28,8 +30,24 @@ class DashboardItem extends JPanel {
         int currentDuration = (Integer) durationSpinner.getValue();
         if (currentDuration > 0) {
             durationSpinner.setValue(currentDuration - 1);
+            this.revalidate();
+            this.repaint();
+        } else if (currentDuration == 0 && dashboard.getController().isCountdownAuto()) {
+            dashboard.getController().goToNext();
         }
     }
+
+    public void setActive(boolean isActive) {
+        if (isActive) {
+            active = true;
+            this.setBackground(new Color(0x8AFF82)); // light green
+        } else {
+            active = false;
+            this.setBackground(new Color(0xFFFFFF)); // white
+        }
+    }
+
+
 
     private void declareComponents() {
         // set item number appropriately
@@ -58,6 +76,8 @@ class DashboardItem extends JPanel {
 
         // notes area
         notesArea = new JTextArea(5,30);
+        notesArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        notesArea.setLineWrap(true);
 
         // duration spinner
         durationSpinner = new JSpinner(new SpinnerNumberModel(60, 1, 3600, 1));
@@ -76,16 +96,15 @@ class DashboardItem extends JPanel {
 
         // take to program button
         JButton toProgramButton = new JButton("Go");
-
-
-
-
         toProgramButton.addActionListener(e -> {
+            dashboard.getController().take(itemNumber - 1);
             System.out.println("Go to program button clicked for item " + itemNumber);
         });
 
-        // layout settings
-        this.setBackground(new Color(0x8AFF82));
+
+
+
+
 
         // add components in order
         this.add(numberLabel);
@@ -102,6 +121,7 @@ class DashboardItem extends JPanel {
     public DashboardItem(Dashboard dashboard) {
         this.dashboard = dashboard;
         declareComponents();
+        this.setActive(false);
         
     }
 

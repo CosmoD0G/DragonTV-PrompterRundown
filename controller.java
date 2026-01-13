@@ -22,6 +22,15 @@ public class controller {
 
     public void take(int target) {
         current_index = target;
+        int i = 0;
+        for (DashboardItem item : controller_items) {
+            if (i == current_index) {
+                item.setActive(true);
+            } else {
+                item.setActive(false);
+            }
+            i++;
+        }
     }
 
     public void advanceSecond() {
@@ -130,6 +139,10 @@ public class controller {
 
     public ArrayList<DashboardItem> getControllerItems() {
         return controller_items;
+    }
+
+    public boolean isCountdownAuto() {
+        return countdown_auto;
     }
 
     public controller() {
