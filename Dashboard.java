@@ -13,6 +13,7 @@ public class Dashboard extends JFrame {
         int j = 0;
         for (int i = 0; i < components.length; i++) {
             if (components[i] instanceof DashboardItem) {
+                System.out.println("Reassigning number for item at index " + i);
                 DashboardItem item = (DashboardItem) components[i];
                 item.updateItemNumber(i + 1);
                 j++;

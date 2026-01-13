@@ -88,6 +88,7 @@ class DashboardItem extends JPanel {
             Container parent = this.getParent();
             if (parent != null) {
                 parent.remove(this);
+                dashboard.getController().removeControllerItem(this);
                 dashboard.reassignNumbers();
                 parent.revalidate();
                 parent.repaint();

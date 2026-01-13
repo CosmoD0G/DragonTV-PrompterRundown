@@ -16,29 +16,39 @@ public class controller {
     private boolean separate_timer_mode = false;
     private boolean countdown_auto = false;
 
+    // Set the dashboard reference
     public void setDashboard(Dashboard dashboard) {
         this.dashboard = dashboard;
     }
 
+    public void removeControllerItem(DashboardItem item) {
+        controller_items.remove(item);
+    }
+    
+    // Take a specific item to program by index
     public void take(int target) {
         current_index = target;
         int i = 0;
         for (DashboardItem item : controller_items) {
             if (i == current_index) {
                 item.setActive(true);
+                System.out.println("Taking item " + i);
             } else {
                 item.setActive(false);
+                System.out.println("Deactivating item " + i);
             }
             i++;
         }
     }
 
+    // Advance the countdown by one second
     public void advanceSecond() {
         if (is_playing) {
             controller_items.get(current_index).advanceSecond();
         }
     }
 
+    // Add a new DashboardItem to the controller's list
     public void addItem(DashboardItem item) {
         controller_items.add(item);
     }
