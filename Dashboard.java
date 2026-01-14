@@ -29,7 +29,7 @@ public class Dashboard extends JFrame {
             if (result == JOptionPane.YES_OPTION) {
                 System.out.println("User confirmed clearing the rundown");
                 ctrl.clearRundown(result == JOptionPane.YES_OPTION);
-
+                ctrl.clearControllerItems();
                 // update UI
                 container.removeAll();
                 reassignNumbers();
@@ -178,8 +178,11 @@ public class Dashboard extends JFrame {
                     ctrl.loadFromFile();
                     for (DashboardItem item : ctrl.getControllerItems()) {
                         addToDashboard(item);
+                        //ctrl.addItem(item);
                     }
                 }
+                
+                
                 
             }
         });

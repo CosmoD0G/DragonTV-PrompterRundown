@@ -24,6 +24,10 @@ public class controller {
     public void removeControllerItem(DashboardItem item) {
         controller_items.remove(item);
     }
+
+    public void clearControllerItems() {
+        controller_items.clear();
+    }
     
     // Take a specific item to program by index
     public void take(int target) {
@@ -67,6 +71,8 @@ public class controller {
     public void goToNext() {
         if (current_index + 1 < controller_items.size()) {
             current_index++;
+            take(current_index);
+            System.out.println("Advancing to next item: " + current_index);
         } else {
             current_index = -1;
             System.out.println("End of rundown reached");
