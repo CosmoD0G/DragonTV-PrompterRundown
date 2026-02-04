@@ -78,6 +78,7 @@ class DashboardItem extends JPanel {
         notesArea = new JTextArea(5,30);
         notesArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         notesArea.setLineWrap(true);
+        notesArea.setWrapStyleWord(true);
 
         // duration spinner
         durationSpinner = new JSpinner(new SpinnerNumberModel(60, 1, 3600, 1));
