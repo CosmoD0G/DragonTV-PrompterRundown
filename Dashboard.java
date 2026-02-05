@@ -85,6 +85,9 @@ public class Dashboard extends JFrame {
         // setup play/pause indicator. do not add yet because we want it at the end
         JLabel playPauseIndicator = new JLabel("■ PAUSED");
 
+        // setup automatic countdown indicator. do not add yet because we want it at the end
+        JLabel autoIndicator = new JLabel("Manual");
+
         
         // Add "Add Item" button
         ControllerButton addButton = new ControllerButton("Add Item");
@@ -159,10 +162,32 @@ public class Dashboard extends JFrame {
             }
         });
 
+        // Add "Automatic Countdown" button
+        ControllerButton autoCountdownButton = new ControllerButton("Automatic Countdown");
+        topPanel.add(autoCountdownButton);
+
+        autoCountdownButton.addActionListener(e -> {
+            System.out.println("Automatic Countdown button clicked");
+            ctrl.toggleAutomatic();
+            if (ctrl.isCountdownAuto()) {
+                autoIndicator.setText("⟳ AUTO");
+            } else {
+                autoIndicator.setText("Manual");
+            }
+        });
+
 
         // Add "Reset" button
         ControllerButton resetButton = new ControllerButton("Reset");
         topPanel.add(resetButton);
+
+        resetButton.addActionListener(e -> {
+            System.out.println("Reset button clicked");
+            ctrl.goToTop();
+            for (DashboardItem item : ctrl.getControllerItems()) {
+                item.resetDuration();
+            }
+        });
 
         // Add "Clear All" button
         ControllerButton clearAllButton = new ControllerButton("Clear All");  
@@ -204,6 +229,9 @@ public class Dashboard extends JFrame {
 
         // Add play/pause indicator
         topPanel.add(playPauseIndicator);
+
+        // Add automatic countdown indicator
+        topPanel.add(autoIndicator);
 
         // ===== Add panels to frame =====
         

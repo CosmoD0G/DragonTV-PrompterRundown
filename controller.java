@@ -70,11 +70,7 @@ public class controller {
     public void syncItemsToHUD() {
         rundown_panels.clear();
         for (DashboardItem item : controller_items) {
-            int num = controller_items.indexOf(item) + 1;
-            String title = item.getTitle();
-            String notes = item.getNotes();
-            int duration = item.getDuration();
-            HUDItem hudItem = new HUDItem(num, title, notes, duration);
+            HUDItem hudItem = new HUDItem(item);
             rundown_panels.add(hudItem);
         }
         hud.setRundown(rundown_panels);
@@ -103,6 +99,7 @@ public class controller {
 
     public void goToTop() {
         current_index = -1;
+        take(0);
     }
 
     public void toggleLive() {
@@ -111,6 +108,10 @@ public class controller {
 
     public void togglePlayPause() {
         is_playing = !is_playing;
+    }
+
+    public void toggleAutomatic() {
+        countdown_auto = !countdown_auto;
     }
 
     public void clearRundown(boolean permission) {

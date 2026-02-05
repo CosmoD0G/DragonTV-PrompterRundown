@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ public class HUD extends JFrame {
 
     public void setRundown(ArrayList<HUDItem> rundowns) {
         // Clear existing items
-        getContentPane().removeAll();
-        getContentPane().setLayout(new GridLayout(rundowns.size(), 1));
+        leftPanel.removeAll();
+
 
         // Add each HUDItem to the HUD
         for (HUDItem item : rundowns) {
@@ -39,6 +40,7 @@ public class HUD extends JFrame {
         // LEFT PANEL (takes full left half)
         
         leftPanel.setBackground(Color.BLUE);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
         // RIGHT CONTAINER (split top / bottom)
         JPanel rightContainer = new JPanel(new GridLayout(2, 1));

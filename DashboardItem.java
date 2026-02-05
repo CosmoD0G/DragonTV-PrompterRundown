@@ -7,7 +7,12 @@ import java.awt.*;
 class DashboardItem extends JPanel {
     private Dashboard dashboard;
     private static int instanceCounter = 0;
+
     private int itemNumber;
+    private boolean active = false;
+    private int stored_time = 0;
+
+    // UI components
     private JLabel numberLabel;
     private JLabel titleLabel;
     private JLabel notesLabel;
@@ -15,7 +20,7 @@ class DashboardItem extends JPanel {
     private JTextField titleField;
     private JTextArea notesArea;
     private JSpinner durationSpinner;
-    private boolean active = false;
+    
 
     public void updateItemNumber(int newNumber) {
         this.itemNumber = newNumber;
@@ -24,6 +29,11 @@ class DashboardItem extends JPanel {
 
     public static void setInstanceCounter(int count) {
         instanceCounter = count;
+    }
+
+    public void resetDuration() {
+        durationSpinner.setValue(stored_time);
+        System.out.println("Duration reset to stored time: " + stored_time);
     }
 
     public void advanceSecond() {
@@ -82,6 +92,19 @@ class DashboardItem extends JPanel {
 
         // duration spinner
         durationSpinner = new JSpinner(new SpinnerNumberModel(60, 1, 3600, 1));
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) durationSpinner.getEditor();
+
+        JFormattedTextField textField = editor.getTextField();
+
+        textField.addPropertyChangeListener("value", evt -> {
+            if (!dashboard.getController().isPlaying()) {
+                System.out.println("User changed spinner value");
+                stored_time = (Integer) durationSpinner.getValue();
+            }
+            
+        });
+
+
 
         // remove button
         JButton removeButton = new JButton("X");
@@ -122,6 +145,7 @@ class DashboardItem extends JPanel {
         this.dashboard = dashboard;
         declareComponents();
         this.setActive(false);
+        stored_time = (Integer) durationSpinner.getValue();
         
     }
 
@@ -130,6 +154,7 @@ class DashboardItem extends JPanel {
         titleField.setText(title);
         notesArea.setText(notes);
         durationSpinner.setValue(duration);
+        stored_time = (Integer) durationSpinner.getValue();
     }
 
     // getters for title, notes, duration
@@ -145,6 +170,12 @@ class DashboardItem extends JPanel {
     public int getDuration() {
         return (Integer) durationSpinner.getValue();
     }
+
+    public int getItemNumber() {
+        return itemNumber;
+    }
+
+
 
     
 
