@@ -7,7 +7,7 @@ class Base {
         cp.setVisible(true);
         ctrl.setDashboard(cp);
 
-        HUD hud = new HUD();
+        HUD hud = new HUD(ctrl);
         hud.setVisible(true);
     }
 }

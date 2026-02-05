@@ -47,9 +47,9 @@ class DashboardItem extends JPanel {
         }
     }
 
-
-
+    // set up the look of the DashboardItem
     private void declareComponents() {
+        
         // set item number appropriately
         instanceCounter++;
         itemNumber = instanceCounter;
@@ -104,10 +104,6 @@ class DashboardItem extends JPanel {
         });
 
 
-
-
-
-
         // add components in order
         this.add(numberLabel);
         this.add(titleLabel);
@@ -119,6 +115,8 @@ class DashboardItem extends JPanel {
         this.add(removeButton);
         this.add(toProgramButton);
     }
+
+    // constructors
 
     public DashboardItem(Dashboard dashboard) {
         this.dashboard = dashboard;
@@ -133,6 +131,8 @@ class DashboardItem extends JPanel {
         notesArea.setText(notes);
         durationSpinner.setValue(duration);
     }
+
+    // getters for title, notes, duration
 
     public String getTitle() {
         return titleField.getText();

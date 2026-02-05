@@ -82,6 +82,9 @@ public class Dashboard extends JFrame {
         // setup live indicator. do not add yet because we want it at the end
         JLabel liveIndicator = new JLabel("● LIVE");
 
+        // setup play/pause indicator. do not add yet because we want it at the end
+        JLabel playPauseIndicator = new JLabel("■ PAUSED");
+
         
         // Add "Add Item" button
         ControllerButton addButton = new ControllerButton("Add Item");
@@ -149,6 +152,11 @@ public class Dashboard extends JFrame {
         playPauseButton.addActionListener(e -> {
             System.out.println("Play / Pause button clicked");
             ctrl.togglePlayPause();
+            if (ctrl.isPlaying()) {
+                playPauseIndicator.setText("▶ PLAYING");
+            } else {
+                playPauseIndicator.setText("■ PAUSED");
+            }
         });
 
 
@@ -194,7 +202,8 @@ public class Dashboard extends JFrame {
         // Add Live Indicator
         topPanel.add(liveIndicator);
 
-       
+        // Add play/pause indicator
+        topPanel.add(playPauseIndicator);
 
         // ===== Add panels to frame =====
         

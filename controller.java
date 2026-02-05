@@ -6,6 +6,7 @@ import javax.swing.Timer;
 
 public class controller {
     private Dashboard dashboard;
+    private HUD hud;
     private ArrayList<HUDItem> rundown_panels;
     private ArrayList<DashboardItem> controller_items;
     private int current_index = -1;
@@ -16,15 +17,23 @@ public class controller {
     private boolean separate_timer_mode = false;
     private boolean countdown_auto = false;
 
+
+    // set the HUD reference
+    public void setHUD(HUD hud) {
+        this.hud = hud;
+    }
+
     // Set the dashboard reference
     public void setDashboard(Dashboard dashboard) {
         this.dashboard = dashboard;
     }
 
+    // removes a specific DashboardItem from the controller's list
     public void removeControllerItem(DashboardItem item) {
         controller_items.remove(item);
     }
 
+    // clears all DashboardItems from the controller's list
     public void clearControllerItems() {
         controller_items.clear();
     }
@@ -57,17 +66,21 @@ public class controller {
         controller_items.add(item);
     }
 
+    // update the HUD items to reflect the current controller items
     public void syncItemsToHUD() {
         rundown_panels.clear();
         for (DashboardItem item : controller_items) {
+            int num = controller_items.indexOf(item) + 1;
             String title = item.getTitle();
             String notes = item.getNotes();
             int duration = item.getDuration();
-            HUDItem hudItem = new HUDItem(title, notes, duration);
+            HUDItem hudItem = new HUDItem(num, title, notes, duration);
             rundown_panels.add(hudItem);
         }
+        hud.setRundown(rundown_panels);
     }
 
+    // takes next rundown item
     public void goToNext() {
         if (current_index + 1 < controller_items.size()) {
             current_index++;
@@ -108,7 +121,11 @@ public class controller {
         }
     }
 
+
+    // ===================================
     // =========== CSV Loading ===========
+    // ===================================
+
     public void setFile(File file) {
         csvFile = file;
     }
@@ -159,6 +176,10 @@ public class controller {
 
     public boolean isCountdownAuto() {
         return countdown_auto;
+    }
+
+    public boolean isPlaying() {
+        return is_playing;
     }
 
     public controller() {
