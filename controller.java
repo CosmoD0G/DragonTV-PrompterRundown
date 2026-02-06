@@ -62,10 +62,15 @@ public class controller {
 
     // Advance the countdown by one second
     public void advanceSecond() {
-        if (is_playing) {
+        System.out.print("Avance Second:");
+        if (is_playing && current_index >= 0) {
             controller_items.get(current_index).advanceSecond();
+            System.out.println(" is playing");
+        } else {
+            System.out.println(" not playing");
         }
         syncItemsToHUD();
+        System.out.println(" not playing");
     }
 
     // Add a new DashboardItem to the controller's list
@@ -178,6 +183,9 @@ public class controller {
 
     // ======= CSV Saving =======
 
+    public void saveToFile() {
+        FileManager.saveToCSV(controller_items);
+    }
     public ArrayList<DashboardItem> getControllerItems() {
         return controller_items;
     }

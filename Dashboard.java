@@ -224,6 +224,10 @@ public class Dashboard extends JFrame {
         ControllerButton exportCSVButton = new ControllerButton("Export to CSV");
         topPanel.add(exportCSVButton);
 
+        exportCSVButton.addActionListener(e -> {
+            ctrl.saveToFile();
+        });
+
         // Add Live Indicator
         topPanel.add(liveIndicator);
 

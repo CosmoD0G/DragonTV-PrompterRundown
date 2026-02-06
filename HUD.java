@@ -12,41 +12,41 @@ public class HUD extends JFrame {
     private JLabel placeholderLabel = new JLabel("Awaiting rundown items...");
 
     public void setRundown(ArrayList<HUDItem> rundowns, int activeElement) {
-    leftPanel.removeAll();
+        leftPanel.removeAll();
 
-    if (rundowns.size() == 0) {
-        leftPanel.add(placeholderLabel);
-        leftPanel.add(Box.createVerticalGlue());
-        leftPanel.revalidate();
-        leftPanel.repaint();
-        return;
-    }
+        if (rundowns.size() == 0) {
+            leftPanel.add(placeholderLabel);
+            leftPanel.add(Box.createVerticalGlue());
+            leftPanel.revalidate();
+            leftPanel.repaint();
+            return;
+        }
 
-    int endOfScreenLimit = rundowns.size()-MAX_ITEMS_ON_SCREEN-1;
-    for (HUDItem item : rundowns) {
-        int thisItemNum = item.getDashboardItem().getItemNumber();
-        if (rundowns.size() > MAX_ITEMS_ON_SCREEN) {
-            if (activeElement > endOfScreenLimit && thisItemNum >= endOfScreenLimit) {
-                leftPanel.add(item);
-            } else if (thisItemNum >= activeElement && thisItemNum <= activeElement + MAX_ITEMS_ON_SCREEN) {
+        int endOfScreenLimit = rundowns.size()-MAX_ITEMS_ON_SCREEN-1;
+        for (HUDItem item : rundowns) {
+            int thisItemNum = item.getDashboardItem().getItemNumber();
+            if (rundowns.size() > MAX_ITEMS_ON_SCREEN) {
+                if (activeElement > endOfScreenLimit && thisItemNum >= endOfScreenLimit) {
+                    leftPanel.add(item);
+                } else if (thisItemNum >= activeElement && thisItemNum <= activeElement + MAX_ITEMS_ON_SCREEN) {
+                    leftPanel.add(item);
+                }
+            } else {
                 leftPanel.add(item);
             }
-        } else {
-            leftPanel.add(item);
+            
+            item.setAlignmentX(Component.LEFT_ALIGNMENT); // important
+            if (item.getDashboardItem().isActive()) {
+                notesLabel.setText(item.getDashboardItem().getNotes());
+            }
+
+            item.setMaximumSize(new Dimension(Integer.MAX_VALUE, item.getPreferredSize().height));
         }
-        
-        item.setAlignmentX(Component.LEFT_ALIGNMENT); // important
-        if (item.getDashboardItem().isActive()) {
-            notesLabel.setText(item.getDashboardItem().getNotes());
-        }
 
-        item.setMaximumSize(new Dimension(Integer.MAX_VALUE, item.getPreferredSize().height));
-    }
+        leftPanel.add(Box.createVerticalGlue()); 
 
-    leftPanel.add(Box.createVerticalGlue()); 
-
-    leftPanel.revalidate();
-    leftPanel.repaint();
+        leftPanel.revalidate();
+        leftPanel.repaint();
 }
 
 
