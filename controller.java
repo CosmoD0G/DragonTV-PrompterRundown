@@ -80,7 +80,7 @@ public class controller {
             HUDItem hudItem = new HUDItem(item);
             rundown_panels.add(hudItem);
         }
-        hud.setRundown(rundown_panels);
+        hud.setRundown(rundown_panels, current_index+1);
     }
 
     // takes next rundown item

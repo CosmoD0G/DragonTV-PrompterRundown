@@ -49,4 +49,8 @@ public class HUDItem extends JPanel{
         add(this.titleLabel);
         add(this.durationLabel);
     }
+
+    public DashboardItem getDashboardItem() {
+        return item;
+    }
 }
