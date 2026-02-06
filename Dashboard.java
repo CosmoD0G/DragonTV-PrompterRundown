@@ -8,6 +8,8 @@ public class Dashboard extends JFrame {
     private controller ctrl;
     private JPanel container;
 
+
+
     public void reassignNumbers() {
         Component[] components = container.getComponents();
         int j = 0;
@@ -76,11 +78,12 @@ public class Dashboard extends JFrame {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(container);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(base.CRTL_SCROLL_SPEED);
         this.add(topPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
 
         // setup live indicator. do not add yet because we want it at the end
-        JLabel liveIndicator = new JLabel("● LIVE");
+        JLabel liveIndicator = new JLabel("");
 
         // setup play/pause indicator. do not add yet because we want it at the end
         JLabel playPauseIndicator = new JLabel("■ PAUSED");
@@ -146,6 +149,11 @@ public class Dashboard extends JFrame {
         liveToggleButton.addActionListener(e -> {
             System.out.println("Live Toggle button clicked");
             ctrl.toggleLive();
+            if (ctrl.isLive()) {
+                liveIndicator.setText("● LIVE");
+            } else {
+                liveIndicator.setText("");
+            }
         });
 
         // Add "Play / Pause" button
@@ -183,6 +191,7 @@ public class Dashboard extends JFrame {
 
         resetButton.addActionListener(e -> {
             System.out.println("Reset button clicked");
+            ctrl.setPlaying(false);
             ctrl.goToTop();
             for (DashboardItem item : ctrl.getControllerItems()) {
                 item.resetDuration();

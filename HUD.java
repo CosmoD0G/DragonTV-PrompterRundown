@@ -5,11 +5,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class HUD extends JFrame {
-    private final int MAX_ITEMS_ON_SCREEN = 10;
+    private final int MAX_ITEMS_ON_SCREEN = 8;
     private JPanel leftPanel = new JPanel();
-    private JLabel notesLabel = new JLabel("Notes / Additional Info");
+    private JLabel notesLabel = new JLabel("Awaiting active rundown element...");
     private JPanel topRightPanel = new JPanel();
     private JLabel placeholderLabel = new JLabel("Awaiting rundown items...");
+    JLabel liveIndicator = new JLabel("LIVE");
 
     public void setRundown(ArrayList<HUDItem> rundowns, int activeElement) {
         leftPanel.removeAll();
@@ -49,8 +50,13 @@ public class HUD extends JFrame {
         leftPanel.repaint();
 }
 
-
-
+    public void setLive(boolean isLive) {
+        if (isLive) {
+            liveIndicator.setForeground(new Color(0xFF0000));
+        } else {
+            liveIndicator.setForeground(new Color(0x333333));
+        }
+    }
 
     public HUD(controller ctrl) {
         ctrl.setHUD(this);
@@ -71,18 +77,38 @@ public class HUD extends JFrame {
         placeholderLabel.setForeground(new Color(0xAAAAAA));
         leftPanel.add(placeholderLabel);
 
-        // RIGHT CONTAINER (split top / bottom)
-        JPanel rightContainer = new JPanel(new GridLayout(2, 1));
+        // Time Indicator
+        JLabel timeIndicator = new JLabel("mm:ss");
+        timeIndicator.setFont(new Font("Arial", Font.BOLD, base.HUD_NOTES_FONT_SIZE));
+        timeIndicator.setForeground(new Color(0xFFFFFF));
 
-        notesLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        // Live Indicator
+        liveIndicator.setFont(new Font("Arial", Font.BOLD, base.HUD_NOTES_FONT_SIZE));
+        liveIndicator.setForeground(new Color(0x333333));
+
+        // RIGHT CONTAINER (split top / bottom)
+        JPanel rightContainer = new JPanel(new BorderLayout());
+
+
+        notesLabel.setFont(new Font("Arial", Font.BOLD, base.HUD_NOTES_FONT_SIZE));
         notesLabel.setForeground(new Color(0xFFFFFF));
         notesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        notesLabel.setVerticalAlignment(SwingConstants.CENTER);
+        notesLabel.setVerticalAlignment(SwingConstants.TOP);
+
         topRightPanel.setBackground(new Color(0x555555));
 
         topRightPanel.setLayout(new BorderLayout());
         topRightPanel.add(notesLabel, BorderLayout.CENTER);
 
+
+        // RIGHT CORNER PANEL
+        JPanel notesHeader = new JPanel();
+        notesHeader.setLayout(new FlowLayout(FlowLayout.LEFT));
+        notesHeader.setBackground(new Color(0x222222));
+        notesHeader.add(timeIndicator);
+        notesHeader.add(liveIndicator);
+        
+        
 
 
 
@@ -93,8 +119,9 @@ public class HUD extends JFrame {
         JPanel bottomRightPanel = new JPanel();
         bottomRightPanel.setBackground(Color.GRAY); // optional
 
-        rightContainer.add(topRightPanel);
-        rightContainer.add(bottomRightPanel);
+        rightContainer.add(notesHeader, BorderLayout.NORTH);
+        rightContainer.add(topRightPanel, BorderLayout.CENTER);
+        rightContainer.add(bottomRightPanel, BorderLayout.SOUTH);
 
         // Add to frame
         this.add(leftPanel);

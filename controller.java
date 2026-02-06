@@ -116,6 +116,7 @@ public class controller {
 
     public void toggleLive() {
         is_live = !is_live;
+        hud.setLive(is_live);
     }
 
     public void togglePlayPause() {
@@ -196,6 +197,14 @@ public class controller {
 
     public boolean isPlaying() {
         return is_playing;
+    }
+
+    public boolean isLive() {
+        return is_live;
+    }
+
+    public void setPlaying(boolean p) {
+        is_playing = p;
     }
 
     public controller() {

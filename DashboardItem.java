@@ -6,10 +6,6 @@ import java.awt.*;
 
 class DashboardItem extends JPanel {
 
-    
-
-
-
     private Dashboard dashboard;
     private static int instanceCounter = 0;
 
@@ -49,6 +45,9 @@ class DashboardItem extends JPanel {
         int currentDuration = (Integer) durationSpinner.getValue();
         if (currentDuration > 0) {
             durationSpinner.setValue(currentDuration - 1);
+            if (getDuration() <= base.WARNING_TIME) {
+                this.setBackground(base.CTRL_WARNING_BG_COLOR);
+            }
             this.revalidate();
             this.repaint();
         } else if (currentDuration == 0 && dashboard.getController().isCountdownAuto()) {
@@ -60,16 +59,16 @@ class DashboardItem extends JPanel {
         if (isActive) {
             active = true;
             if (isScript) {
-                this.setBackground(base.SCRIPT_ACTIVE_BG_COLOR);
+                this.setBackground(base.CTRL_SCRIPT_ACTIVE_BG_COLOR);
             } else {
-                this.setBackground(base.STANDARD_ACTIVE_BG_COLOR);
+                this.setBackground(base.CTRL_STANDARD_ACTIVE_BG_COLOR);
             }
         } else {
             active = false;
             if (isScript) {
-                this.setBackground(base.SCRIPT_INACTIVE_BG_COLOR); // dark gray
+                this.setBackground(base.CTRL_SCRIPT_INACTIVE_BG_COLOR); // dark gray
             } else {
-                this.setBackground(base.STANDARD_INACTIVE_BG_COLOR); // white
+                this.setBackground(base.CTRL_STANDARD_INACTIVE_BG_COLOR); // white
             }
         }
     }
@@ -121,8 +120,6 @@ class DashboardItem extends JPanel {
             
         });
 
-
-
         // remove button
         JButton removeButton = new JButton("X");
         removeButton.addActionListener(e -> {
@@ -144,15 +141,15 @@ class DashboardItem extends JPanel {
         });
 
         // script checkbox
-        JCheckBox checkBox = new JCheckBox("Enable feature");
+        JCheckBox checkBox = new JCheckBox("Script");
         checkBox.addActionListener(e -> {
             isScript = checkBox.isSelected();
             if (isScript) {
                 System.out.println("Item " + itemNumber + " set to Script mode");
-                setBackground(base.SCRIPT_INACTIVE_BG_COLOR); // light yellow for scripts
+                setBackground(base.CTRL_SCRIPT_INACTIVE_BG_COLOR); // light yellow for scripts
             } else {
                 System.out.println("Item " + itemNumber + " set to Standard mode");
-                setBackground(base.STANDARD_INACTIVE_BG_COLOR); // white for standard
+                setBackground(base.CTRL_STANDARD_INACTIVE_BG_COLOR); // white for standard
             }
         });
 
