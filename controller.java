@@ -16,6 +16,7 @@ public class controller {
     private int seconds_remaining = 0;
     private boolean separate_timer_mode = false;
     private boolean countdown_auto = false;
+    private ScriptFrame scriptFrame;
 
 
     // set the HUD reference
@@ -46,6 +47,11 @@ public class controller {
             if (i == current_index) {
                 item.setActive(true);
                 System.out.println("Taking item " + i);
+                if (item.isScript()) {
+                    scriptFrame.displayScript(item.getNotesText());
+                } else {
+                    scriptFrame.displayScript("");
+                }
             } else {
                 item.setActive(false);
                 System.out.println("Deactivating item " + i);
@@ -59,6 +65,7 @@ public class controller {
         if (is_playing) {
             controller_items.get(current_index).advanceSecond();
         }
+        syncItemsToHUD();
     }
 
     // Add a new DashboardItem to the controller's list
@@ -186,8 +193,13 @@ public class controller {
     public controller() {
         rundown_panels = new ArrayList<>();
         controller_items = new ArrayList<>();
+        scriptFrame = new ScriptFrame(this);
 
         Timer timer = new Timer(1000, e -> advanceSecond());
         timer.start();
+    }
+
+    public void setScriptFrame(ScriptFrame scriptFrame) {
+        this.scriptFrame = scriptFrame;
     }   
 }

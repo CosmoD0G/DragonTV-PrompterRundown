@@ -5,12 +5,21 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 class DashboardItem extends JPanel {
+
+    
+
+
+
     private Dashboard dashboard;
     private static int instanceCounter = 0;
 
     private int itemNumber;
     private boolean active = false;
     private int stored_time = 0;
+
+    // if an item is a script, it will appear as the classic telemprompter read mode
+    private boolean isScript = false;
+    private double scrollAmount = 0.0;
 
     // UI components
     private JLabel numberLabel;
@@ -50,10 +59,18 @@ class DashboardItem extends JPanel {
     public void setActive(boolean isActive) {
         if (isActive) {
             active = true;
-            this.setBackground(new Color(0x8AFF82)); // light green
+            if (isScript) {
+                this.setBackground(base.SCRIPT_ACTIVE_BG_COLOR);
+            } else {
+                this.setBackground(base.STANDARD_ACTIVE_BG_COLOR);
+            }
         } else {
             active = false;
-            this.setBackground(new Color(0xFFFFFF)); // white
+            if (isScript) {
+                this.setBackground(base.SCRIPT_INACTIVE_BG_COLOR); // dark gray
+            } else {
+                this.setBackground(base.STANDARD_INACTIVE_BG_COLOR); // white
+            }
         }
     }
 
@@ -126,6 +143,21 @@ class DashboardItem extends JPanel {
             System.out.println("Go to program button clicked for item " + itemNumber);
         });
 
+        // script checkbox
+        JCheckBox checkBox = new JCheckBox("Enable feature");
+        checkBox.addActionListener(e -> {
+            isScript = checkBox.isSelected();
+            if (isScript) {
+                System.out.println("Item " + itemNumber + " set to Script mode");
+                setBackground(base.SCRIPT_INACTIVE_BG_COLOR); // light yellow for scripts
+            } else {
+                System.out.println("Item " + itemNumber + " set to Standard mode");
+                setBackground(base.STANDARD_INACTIVE_BG_COLOR); // white for standard
+            }
+        });
+
+
+
 
         // add components in order
         this.add(numberLabel);
@@ -137,6 +169,7 @@ class DashboardItem extends JPanel {
         this.add(durationSpinner);
         this.add(removeButton);
         this.add(toProgramButton);
+        this.add(checkBox);
     }
 
     // constructors
@@ -157,7 +190,7 @@ class DashboardItem extends JPanel {
         stored_time = (Integer) durationSpinner.getValue();
     }
 
-    // getters for title, notes, duration
+    // getters
 
     public String getTitle() {
         return titleField.getText();
@@ -173,6 +206,18 @@ class DashboardItem extends JPanel {
 
     public int getItemNumber() {
         return itemNumber;
+    }
+
+    public Object getNotesText() {
+        return notesArea.getText();
+    }
+
+    public boolean isScript() {
+        return isScript;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
 
