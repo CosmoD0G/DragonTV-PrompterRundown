@@ -25,6 +25,30 @@ public class base {
 
     public static final int WARNING_TIME = 7;
 
+    public static String secondsToMMSS(int seconds) {
+        String mm = "";
+        String ss = "";
+        int totalMin = seconds / 60;
+        int sec = seconds % totalMin*60;
+
+        if (sec > 9) {
+            ss = "0"+String.valueOf(sec);
+        } else {
+            ss = String.valueOf(sec);
+        }
+
+        if (totalMin > 9) {
+            mm = "0"+String.valueOf(totalMin);
+        } else {
+            mm = String.valueOf(totalMin);
+        }
+
+        return mm+ss;
+
+
+        
+    }
+
     public static void main(String[] args) {
 
         controller ctrl = new controller();

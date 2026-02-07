@@ -50,6 +50,8 @@ public class HUDItem extends JPanel{
             if (item.getDuration() <= base.WARNING_TIME) {
                 this.setBackground(base.CTRL_WARNING_BG_COLOR);
             }
+        } else {
+            this.setBackground(base.HUD_STANDARD_INACTIVE_BG_COLOR);
         }
 
         

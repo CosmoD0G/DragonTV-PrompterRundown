@@ -7,10 +7,19 @@ import javax.swing.border.EmptyBorder;
 public class HUD extends JFrame {
     private final int MAX_ITEMS_ON_SCREEN = 8;
     private JPanel leftPanel = new JPanel();
-    private JLabel notesLabel = new JLabel("Awaiting active rundown element...");
+    JTextArea notesArea = new JTextArea();
+    
+
     private JPanel topRightPanel = new JPanel();
     private JLabel placeholderLabel = new JLabel("Awaiting rundown items...");
     JLabel liveIndicator = new JLabel("LIVE");
+
+    JPanel overlayPanel = new JPanel();
+
+    JTextArea scriptArea = new JTextArea();
+
+    int totalSeconds = 0;
+
 
     public void setRundown(ArrayList<HUDItem> rundowns, int activeElement) {
         leftPanel.removeAll();
@@ -25,6 +34,7 @@ public class HUD extends JFrame {
 
         int endOfScreenLimit = rundowns.size()-MAX_ITEMS_ON_SCREEN-1;
         for (HUDItem item : rundowns) {
+            totalSeconds += item.getDashboardItem().getDuration();
             int thisItemNum = item.getDashboardItem().getItemNumber();
             if (rundowns.size() > MAX_ITEMS_ON_SCREEN) {
                 if (activeElement > endOfScreenLimit && thisItemNum >= endOfScreenLimit) {
@@ -38,17 +48,33 @@ public class HUD extends JFrame {
             
             item.setAlignmentX(Component.LEFT_ALIGNMENT); // important
             if (item.getDashboardItem().isActive()) {
-                notesLabel.setText(item.getDashboardItem().getNotes());
+                notesArea.setText(item.getDashboardItem().getNotes());
             }
 
             item.setMaximumSize(new Dimension(Integer.MAX_VALUE, item.getPreferredSize().height));
         }
+        // set total time
+        
 
         leftPanel.add(Box.createVerticalGlue()); 
 
         leftPanel.revalidate();
         leftPanel.repaint();
 }
+
+    public void displayScript(Object notesText) {
+        return;
+        /*if (notesText != null) {
+            scriptArea.setText(notesText.toString());
+            scriptArea.setCaretPosition(0); // scroll to top
+            overlayPanel.setVisible(true);
+        } else {
+            overlayPanel.setVisible(false);
+        }
+        this.repaint();
+        this.revalidate();
+*/
+    }
 
     public void setLive(boolean isLive) {
         if (isLive) {
@@ -63,6 +89,7 @@ public class HUD extends JFrame {
         setTitle("HUD");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBackground(new Color(0x1F1F1F));
 
 
@@ -89,16 +116,19 @@ public class HUD extends JFrame {
         // RIGHT CONTAINER (split top / bottom)
         JPanel rightContainer = new JPanel(new BorderLayout());
 
+        notesArea.setLineWrap(true);
+        notesArea.setWrapStyleWord(true);
+        notesArea.setEditable(false);
+        notesArea.setFocusable(false);
+        notesArea.setOpaque(false);
+        notesArea.setFont(new Font("Arial", Font.BOLD, base.HUD_NOTES_FONT_SIZE));
+        notesArea.setForeground(new Color(0xFFFFFF));
 
-        notesLabel.setFont(new Font("Arial", Font.BOLD, base.HUD_NOTES_FONT_SIZE));
-        notesLabel.setForeground(new Color(0xFFFFFF));
-        notesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        notesLabel.setVerticalAlignment(SwingConstants.TOP);
 
         topRightPanel.setBackground(new Color(0x555555));
 
         topRightPanel.setLayout(new BorderLayout());
-        topRightPanel.add(notesLabel, BorderLayout.CENTER);
+        topRightPanel.add(notesArea, BorderLayout.CENTER);
 
 
         // RIGHT CORNER PANEL
@@ -109,10 +139,18 @@ public class HUD extends JFrame {
         notesHeader.add(liveIndicator);
         
         
+        // SCRIPT OVERLAY
 
+        overlayPanel.setOpaque(true);
+        overlayPanel.setBackground(new Color(0, 0, 0, 180)); // translucent black
+        overlayPanel.setLayout(new GridBagLayout()); // center content
 
+        scriptArea.setFont(new Font("Arial", Font.BOLD, 48));
+        scriptArea.setForeground(Color.WHITE);
+        overlayPanel.add(scriptArea);
 
-
+        setGlassPane(overlayPanel);
+        overlayPanel.setVisible(false); // start hidden
 
 
 
@@ -135,6 +173,10 @@ public class HUD extends JFrame {
 
 
         setVisible(true);
+    }
+
+    public JPanel getScriptPanel() {
+        return overlayPanel;
     }
 
 

@@ -63,6 +63,7 @@ public class Dashboard extends JFrame {
         setTitle("Control Panel");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
 
         // ===== Top panel (buttons) =====
