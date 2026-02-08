@@ -116,6 +116,7 @@ class DashboardItem extends JPanel {
             if (!dashboard.getController().isPlaying()) {
                 System.out.println("User changed spinner value");
                 stored_time = (Integer) durationSpinner.getValue();
+                dashboard.updateTimeIndicator();
             }
             
         });

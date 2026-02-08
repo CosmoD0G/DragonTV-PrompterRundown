@@ -8,6 +8,9 @@ public class Dashboard extends JFrame {
     private controller ctrl;
     private JPanel container;
 
+    // setup time indicator. do not add yet because we want it at the end
+    JLabel timeIndicator = new JLabel("00:00");
+
 
 
     public void reassignNumbers() {
@@ -24,6 +27,14 @@ public class Dashboard extends JFrame {
         DashboardItem.setInstanceCounter(j);
     }
 
+    public void updateTimeIndicator() {
+        int totalSeconds = ctrl.calcuateTotalSeconds();
+        timeIndicator.setText(base.secondsToMMSS(totalSeconds));
+        // Assuming you have a JLabel named timeIndicator
+        // You can update its text like this:
+        // timeIndicator.setText(timeText);
+        System.out.println("Updated time indicator: " + base.secondsToMMSS(totalSeconds));
+    }
 
     // Clear the rundown with confirmation dialog
     private boolean clear() {
@@ -92,8 +103,7 @@ public class Dashboard extends JFrame {
         // setup automatic countdown indicator. do not add yet because we want it at the end
         JLabel autoIndicator = new JLabel("Manual");
 
-        // setup time indicator. do not add yet because we want it at the end
-        JLabel timeIndicator = new JLabel("00:00");
+        
 
         
         // Add "Add Item" button

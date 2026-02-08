@@ -23,6 +23,13 @@ public class controller {
         this.hud = hud;
     }
 
+    public int calcuateTotalSeconds() {
+        int total = 0;
+        for (DashboardItem item : controller_items) {
+            total += item.getDuration();
+        }
+        return total;
+    }
     // Set the dashboard reference
     public void setDashboard(Dashboard dashboard) {
         this.dashboard = dashboard;
@@ -70,6 +77,7 @@ public class controller {
         }
         syncItemsToHUD();
         System.out.println(" not playing");
+        dashboard.updateTimeIndicator();
     }
 
     // Add a new DashboardItem to the controller's list
