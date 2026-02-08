@@ -12,6 +12,7 @@ public class HUD extends JFrame {
 
     private JPanel topRightPanel = new JPanel();
     private JLabel placeholderLabel = new JLabel("Awaiting rundown items...");
+    JLabel timeIndicator = new JLabel("mm:ss");
     JLabel liveIndicator = new JLabel("LIVE");
 
     JPanel overlayPanel = new JPanel();
@@ -22,6 +23,7 @@ public class HUD extends JFrame {
 
 
     public void setRundown(ArrayList<HUDItem> rundowns, int activeElement) {
+        totalSeconds = 0;
         leftPanel.removeAll();
 
         if (rundowns.size() == 0) {
@@ -53,11 +55,11 @@ public class HUD extends JFrame {
 
             item.setMaximumSize(new Dimension(Integer.MAX_VALUE, item.getPreferredSize().height));
         }
+
         // set total time
-        
+        timeIndicator.setText(base.secondsToMMSS(totalSeconds));
 
         leftPanel.add(Box.createVerticalGlue()); 
-
         leftPanel.revalidate();
         leftPanel.repaint();
 }
@@ -105,7 +107,6 @@ public class HUD extends JFrame {
         leftPanel.add(placeholderLabel);
 
         // Time Indicator
-        JLabel timeIndicator = new JLabel("mm:ss");
         timeIndicator.setFont(new Font("Arial", Font.BOLD, base.HUD_NOTES_FONT_SIZE));
         timeIndicator.setForeground(new Color(0xFFFFFF));
 

@@ -92,6 +92,9 @@ public class Dashboard extends JFrame {
         // setup automatic countdown indicator. do not add yet because we want it at the end
         JLabel autoIndicator = new JLabel("Manual");
 
+        // setup time indicator. do not add yet because we want it at the end
+        JLabel timeIndicator = new JLabel("00:00");
+
         
         // Add "Add Item" button
         ControllerButton addButton = new ControllerButton("Add Item");
@@ -246,6 +249,9 @@ public class Dashboard extends JFrame {
 
         // Add automatic countdown indicator
         topPanel.add(autoIndicator);
+
+        // Add time indicator
+        topPanel.add(timeIndicator);
 
         // ===== Add panels to frame =====
         

@@ -29,24 +29,21 @@ public class base {
         String mm = "";
         String ss = "";
         int totalMin = seconds / 60;
-        int sec = seconds % totalMin*60;
+        int sec = seconds % 60;
 
-        if (sec > 9) {
+        if (sec < 10) {
             ss = "0"+String.valueOf(sec);
         } else {
             ss = String.valueOf(sec);
         }
 
-        if (totalMin > 9) {
+        if (totalMin < 10) {
             mm = "0"+String.valueOf(totalMin);
         } else {
             mm = String.valueOf(totalMin);
         }
 
-        return mm+ss;
-
-
-        
+        return mm+":"+ss;
     }
 
     public static void main(String[] args) {
